@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+const gst = require('../');
+
+if (process.argv[2] === 'hash') {
+  const hash = new gst.Hash();
+
+  hash.calculate(process.cwd(), (err, hash) => {
+    if (err)
+      throw err;
+    console.log(hash);
+  });
+}

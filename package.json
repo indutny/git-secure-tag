@@ -1,0 +1,32 @@
+{
+  "name": "git-secure-tag",
+  "version": "1.0.0",
+  "description": "Git tags with higher level of security",
+  "main": "lib/git-secure-tag.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/indutny/git-secure-tag.git"
+  },
+  "keywords": [
+    "git",
+    "secure",
+    "tag",
+    "sha256",
+    "gpg",
+    "signature",
+    "verify",
+    "sign"
+  ],
+  "author": "Fedor Indutny <fedor@indutny.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indutny/git-secure-tag/issues"
+  },
+  "homepage": "https://github.com/indutny/git-secure-tag#readme",
+  "dependencies": {
+    "async": "^2.0.0-rc.6"
+  }
+}

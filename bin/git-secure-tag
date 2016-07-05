@@ -1,12 +1,39 @@
 #!/usr/bin/env node
+const yargs = require('yargs')
+    .usage('Usage: git secure-tag [-s | -u <keyid>] [-m <msg>] \n' +
+           '                      <tagname> [<commit> | <object>]')
+    .command('hash', 'print hash of repository contents')
+    .alias('v', 'verify')
+    .boolean('v')
+    .describe('v', 'Verify the gpg signature of a given tag')
+    .boolean('s')
+    .boolean('f')
+    .alias('h', 'help')
+    .help()
+const argv = yargs.argv;
+
 const gst = require('../');
 
-if (process.argv[2] === 'hash') {
-  const hash = new gst.Hash();
+if (argv._[0] === 'hash') {
+  const hash = new gst.Hash(argv);
 
   hash.calculate(process.cwd(), (err, hash) => {
     if (err)
       throw err;
     console.log(hash);
   });
+  return;
 }
+
+if (argv._.length < 1) {
+  process.stderr.write('Please specify tag\n');
+  yargs.showHelp();
+  process.exit(1);
+}
+
+const tag = new gst.Tag(argv, process.cwd());
+
+if (argv.v)
+  tag.verify();
+else
+  tag.sign();

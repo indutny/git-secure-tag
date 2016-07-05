@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Git tags with higher level of security",
   "main": "lib/git-secure-tag.js",
+  "bin": {
+    "git-secure-tag": "bin/git-secure-tag"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,6 +30,7 @@
   },
   "homepage": "https://github.com/indutny/git-secure-tag#readme",
   "dependencies": {
-    "async": "^2.0.0-rc.6"
+    "async": "^2.0.0-rc.6",
+    "yargs": "^4.7.1"
   }
 }

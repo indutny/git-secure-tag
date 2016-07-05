@@ -1,6 +1,6 @@
 {
   "name": "git-secure-tag",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Git tags with higher level of security",
   "main": "lib/git-secure-tag.js",
   "bin": {

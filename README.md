@@ -46,6 +46,12 @@ git secure-tag v1.2.7 -m "My tag annotation"
 git secure-tag -v v1.2.7
 ```
 
+## Prior Work
+
+Largely inspired by:
+
+https://github.com/cgwalters/git-evtag
+
 ## LICENSE
 
 This software is licensed under the MIT License.

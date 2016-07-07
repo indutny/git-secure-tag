@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const crypto = require('crypto');
 const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 
@@ -61,6 +62,25 @@ exports.init = function init() {
   cmd(GIT, [ 'init' ]);
   cmd(GIT, [ 'config', 'user.email', 'john@doe.org' ]);
   cmd(GIT, [ 'config', 'user.name', 'John Doe' ]);
+
+  write('file.txt', 'hello');
+  cmd(GIT, [ 'add', 'file.txt' ]);
+  cmd(GIT, [ 'commit', '-m', 'first' ]);
+
+  write('file.txt', 'world');
+  cmd(GIT, [ 'add', 'file.txt' ]);
+  cmd(GIT, [ 'commit', '-m', 'second' ]);
+
+  write('file.txt', '!');
+  cmd(GIT, [ 'add', 'file.txt' ]);
+  cmd(GIT, [ 'commit', '-m', 'third' ]);
+
+  // Create invalid tags
+  const hash = crypto.createHash('sha512').update('invalid').digest('hex');
+  cmd(GIT, [ 'tag', '-m', `Git-EVTag-v0-SHA512: ${hash}`, 'invalid-1' ]);
+  cmd(GIT, [ 'tag', '-m', `Git-Secure-Tag-v0: ${hash}`, 'invalid-2' ]);
+  cmd(GIT, [ 'tag', '-m', `Random-Hash: ${hash}`, 'invalid-3' ]);
+
 };
 
 // Clone repo

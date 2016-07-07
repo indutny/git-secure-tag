@@ -34,9 +34,8 @@ if (argv._.length < 1) {
   process.exit(1);
 }
 
-const tag = new gst.Tag(argv, process.cwd());
-
+const api = new gst.API(process.cwd());
 if (argv.v)
-  tag.verify();
+  api.verify(argv._[0], argv);
 else
-  tag.sign();
+  api.sign(argv._[0], argv._[1], argv);

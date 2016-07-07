@@ -1,44 +1,20 @@
 'use strict';
 
 const crypto = require('crypto');
-const fs = require('fs');
-const path = require('path');
-const spawnSync = require('child_process').spawnSync;
 
 const tape = require('tape');
-const rimraf = require('rimraf');
 
 const gst = require('../');
 const GIT = gst.GIT;
 
-const cli = path.join(__dirname, '..', 'bin', 'git-secure-tag');
+const fixtures = require('./fixtures');
 
-const repo = path.join(__dirname, 'fixtures', 'scenario');
+const cli = fixtures.cli;
+const cmd = fixtures.cmd;
+const write = fixtures.write;
 
-function cmd(name, args) {
-  const p = spawnSync(name, args, {
-    stdio: [ null, 'pipe', 'pipe' ],
-    cwd: repo
-  });
-  if (p.status !== 0) {
-    const msg = `${name} ${args.join(' ')} failed`;
-    throw new Error(msg + '\n' + p.stdout + '\n' + p.stderr);
-  }
-}
-
-function write(file, content) {
-  fs.writeFileSync(path.join(repo, file), content);
-}
-
-tape('v8 inspect', (t) => {
-  // Initialize repo
-  // TODO(indutny): move it to fixtures?
-  rimraf.sync(repo);
-  fs.mkdirSync(repo);
-
-  cmd(GIT, [ 'init' ]);
-  cmd(GIT, [ 'config', 'user.email', 'john@doe.org' ]);
-  cmd(GIT, [ 'config', 'user.name', 'John Doe' ]);
+tape('git secure tag', (t) => {
+  fixtures.init();
 
   write('file.txt', 'hello');
   cmd(GIT, [ 'add', 'file.txt' ]);
@@ -82,7 +58,6 @@ tape('v8 inspect', (t) => {
            /No.*found/,
            'no hash at all');
 
-  // Deinitialize repo
-  rimraf.sync(repo);
+  fixtures.destroy();
   t.end();
 });

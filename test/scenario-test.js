@@ -1,10 +1,6 @@
 'use strict';
 
-const crypto = require('crypto');
-
 const tape = require('tape');
-
-const gst = require('../');
 
 const fixtures = require('./fixtures');
 

@@ -1,16 +1,11 @@
 'use strict';
 
-const crypto = require('crypto');
-
 const async = require('async');
 const tape = require('tape');
 
 const gst = require('../');
 
 const fixtures = require('./fixtures');
-
-const cli = fixtures.cli;
-const cmd = fixtures.cmd;
 
 tape('js api', (t) => {
   fixtures.init();

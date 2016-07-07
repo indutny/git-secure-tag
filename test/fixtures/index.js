@@ -24,6 +24,7 @@ function cmd(name, args, noCwd) {
     const msg = `${name} ${args.join(' ')} failed`;
     throw new Error(msg + '\n' + p.stdout + '\n' + p.stderr);
   }
+  return p.stdout.toString();
 }
 exports.cmd = cmd;
 
@@ -31,6 +32,26 @@ function write(file, content) {
   fs.writeFileSync(path.join(repo, file), content);
 }
 exports.write = write;
+
+exports.tags = function tags() {
+  const lines = cmd(GIT, [ 'tag', '-n9999' ]).split('\n');
+
+  const result = [];
+
+  let tag;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (/^\S/.test(line)) {
+      tag = line.split(/\s/)[0];
+      continue;
+    }
+
+    if (/Git-(EVTag-v0-SHA512|Secure-Tag-V0)/.test(line))
+      result.push(tag);
+  }
+
+  return result;
+};
 
 // Initialize repo
 exports.init = function init() {
@@ -45,7 +66,7 @@ exports.init = function init() {
 // Clone repo
 exports.clone = function clone(url) {
   rimraf.sync(repo);
-  cmd(GIT, [ 'clone', url, repo ], true);
+  cmd(GIT, [ 'clone', '--recursive', url, repo ], true);
 };
 
 exports.destroy = function destroy() {

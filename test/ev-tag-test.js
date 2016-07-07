@@ -8,15 +8,26 @@ const cli = fixtures.cli;
 const cmd = fixtures.cmd;
 
 tape('evtag interop', (t) => {
-  fixtures.clone('git://github.com/cgwalters/git-evtag.git');
+  const repos = [
+    'git://github.com/cgwalters/git-evtag.git',
+    'git://github.com/ostreedev/ostree.git',
+    'git://github.com/GNOME/gnome-terminal.git',
+    'https://gitlab.com/fidencio/libosinfo.git'
+  ];
 
-  // Verify tags
-  const node = process.execPath;
-  t.doesNotThrow(() => cmd(node, [ cli, '--insecure', '-v', 'v2016.1' ]),
-                 'valid evtag #1');
-  t.doesNotThrow(() => cmd(node, [ cli, '--insecure', '-v', 'v2015.2' ]),
-                 'valid evtag #2');
+  repos.forEach((url) => {
+    fixtures.clone(url);
 
-  fixtures.destroy();
+    const tags = fixtures.tags();
+
+    // Verify tags
+    const node = process.execPath;
+    tags.forEach((tag) => {
+      t.doesNotThrow(() => cmd(node, [ cli, '--insecure', '-v', tag ]),
+                     `tag ${tag} of ${url} should validate`);
+    });
+
+    fixtures.destroy();
+  });
   t.end();
 });

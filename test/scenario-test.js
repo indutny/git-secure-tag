@@ -38,17 +38,19 @@ tape('v8 inspect', (t) => {
 
   cmd(GIT, [ 'init' ]);
 
+  const author = 'John Doe <john@doe.org>';
+
   write('file.txt', 'hello');
   cmd(GIT, [ 'add', 'file.txt' ]);
-  cmd(GIT, [ 'commit', '-m', 'first' ]);
+  cmd(GIT, [ 'commit', '-m', 'first', '--author', author ]);
 
   write('file.txt', 'world');
   cmd(GIT, [ 'add', 'file.txt' ]);
-  cmd(GIT, [ 'commit', '-m', 'second' ]);
+  cmd(GIT, [ 'commit', '-m', 'second', '--author', author]);
 
   write('file.txt', '!');
   cmd(GIT, [ 'add', 'file.txt' ]);
-  cmd(GIT, [ 'commit', '-m', 'third' ]);
+  cmd(GIT, [ 'commit', '-m', 'third', '--author', author ]);
 
   // Create tags
   const node = process.execPath;

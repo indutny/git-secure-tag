@@ -7,7 +7,9 @@
     "git-secure-tag": "bin/git-secure-tag"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "make lint",
+    "format": "make format",
+    "test": "tape test/*-test.js && npm run lint"
   },
   "repository": {
     "type": "git",
@@ -32,5 +34,10 @@
   "dependencies": {
     "async": "^2.0.0-rc.6",
     "yargs": "^4.7.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.0.1",
+    "rimraf": "^2.5.3",
+    "tape": "^4.6.0"
   }
 }

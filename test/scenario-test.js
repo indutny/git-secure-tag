@@ -37,20 +37,20 @@ tape('v8 inspect', (t) => {
   fs.mkdirSync(repo);
 
   cmd(GIT, [ 'init' ]);
-
-  const author = 'John Doe <john@doe.org>';
+  cmd(GIT, [ 'config', 'user.email', 'john@doe.org' ]);
+  cmd(GIT, [ 'config', 'user.name', 'John Doe' ]);
 
   write('file.txt', 'hello');
   cmd(GIT, [ 'add', 'file.txt' ]);
-  cmd(GIT, [ 'commit', '-m', 'first', '--author', author ]);
+  cmd(GIT, [ 'commit', '-m', 'first' ]);
 
   write('file.txt', 'world');
   cmd(GIT, [ 'add', 'file.txt' ]);
-  cmd(GIT, [ 'commit', '-m', 'second', '--author', author]);
+  cmd(GIT, [ 'commit', '-m', 'second' ]);
 
   write('file.txt', '!');
   cmd(GIT, [ 'add', 'file.txt' ]);
-  cmd(GIT, [ 'commit', '-m', 'third', '--author', author ]);
+  cmd(GIT, [ 'commit', '-m', 'third' ]);
 
   // Create tags
   const node = process.execPath;

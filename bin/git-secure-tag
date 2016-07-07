@@ -17,7 +17,7 @@ const gst = require('../');
 if (argv._[0] === 'hash') {
   const hash = new gst.Hash(argv);
 
-  hash.calculate(process.cwd(), (err, hash) => {
+  hash.calculate(process.cwd(), argv._[1], (err, hash) => {
     if (err)
       throw err;
     console.log(hash);

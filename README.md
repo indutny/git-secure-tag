@@ -5,7 +5,7 @@
 ## Why?
 
 `git` uses SHA-1 hashes when signing tag. SHA-1 is generally deprecated and is
-not a collision-safe anymore (though, collisions are yet to come).
+not a collision-safe anymore ~~(though, collisions are yet to come)~~.
 
 ## How?
 
